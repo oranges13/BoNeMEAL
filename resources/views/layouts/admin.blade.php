@@ -12,7 +12,7 @@
     <title>{{ __('app.page.title') }}</title>
 
     <link href="{{ mix('css/app.css') }}" rel="stylesheet">
-    @yield('styles')
+    @stack('styles')
 </head>
 <body id="page-top">
     <div id="wrapper">
@@ -37,7 +37,7 @@
 
     </div>
     <script src="{{ mix('js/app.js') }}" defer></script>
-    @yield('scripts')
+    @stack('scripts')
 
     @include('partials.flash')
 </body>

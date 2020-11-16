@@ -10,8 +10,8 @@ RUN chown laravel:laravel /var/www/html
 
 WORKDIR /var/www/html
 
-RUN apk add --no-cache php7-sqlite3 php7-mysqli sqlite sqlite-dev \
-    && docker-php-ext-install pdo pdo_mysql pdo_sqlite mysqli
+RUN apk add --no-cache php7-bcmath php7-sqlite3 php7-mysqli sqlite sqlite-dev \
+    && docker-php-ext-install pdo pdo_mysql pdo_sqlite mysqli bcmath
 
 # install and enable xdebug
 RUN apk add --no-cache $PHPIZE_DEPS \

@@ -12,7 +12,7 @@
     <title>{{ __('app.page.title') }}</title>
 
     <link href="{{ mix('css/app.css') }}" rel="stylesheet">
-    @yield('styles')
+    @stack('styles')
 </head>
 <body id="layout">
     <div id="app">
@@ -22,15 +22,14 @@
             @yield('content')
         </main>
 
-        <footer class="mt-1">
+        <footer class="sticky-footer mt-1">
             <div class="container">
-                <hr />
-                <p>&copy; {{ date('Y') }} <a href="https://ftbastler.github.com/BoNeMEAL">{{ trans('app.copyright') }}</a> &ndash; {{ trans('app.footerNotice') }}</p>
+                <span class="copyright">&copy; {{ date('Y') }} <a href="https://ftbastler.github.com/BoNeMEAL">{{ trans('app.copyright') }}</a> &ndash; {{ trans('app.footerNotice') }}</span>
             </div>
         </footer>
     </div>
     <script src="{{ mix('js/app.js') }}" defer></script>
-    @yield('scripts')
+    @stack('scripts')
 
     @include('partials.flash')
 </body>
