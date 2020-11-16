@@ -28,7 +28,7 @@
 
 @section('content')
 <div class="container">
-    <ul class="nav nav-pills nav-fill wizard">
+    <ul class="nav nav-fill wizard">
             <li class="nav-item nav-link active">
                 <span class="badge badge-default">1</span>
                 <span class="d-none d-sm-inline">Welcome</span>

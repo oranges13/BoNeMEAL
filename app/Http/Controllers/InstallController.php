@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Http\Requests\InstallRequest;
 
 class InstallController extends Controller
 {
@@ -16,11 +16,15 @@ class InstallController extends Controller
     }
 
     public function config() {
+        $langs = get_all_available_languages();
+        $host = request()->getSchemeAndHttpHost();
+        $timezones = list_all_available_timezones();
 
+        return view('install.config', compact('host', 'langs', 'timezones'));
     }
 
-    public function run() {
-
+    public function run(InstallRequest $request) {
+        dd($request->validated());
     }
 
     public function finish() {

@@ -33,7 +33,7 @@
                             <a class="nav-link" href="https://github.com/ftbastler/BoNeMEAL" target="_blank">GitHub</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="http://dev.bukkit.org/bukkit-plugins/ban-management/" target="_blank">Bukkit Plugin</a>
+                            <a class="nav-link" href="https://github.com/BanManagement/BanManager" target="_blank">Bukkit / Spigot Plugin</a>
                         </li>
                     </ul>
                 </div>
