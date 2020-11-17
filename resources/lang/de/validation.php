@@ -175,6 +175,7 @@ return [
         'time'                  => 'Uhrzeit',
         'available'             => 'verfügbar',
         'size'                  => 'Größe',
+        'database_type'         => 'Datenbanktyp',
         "db_host"               => "Datenbank Hoster",
         "db_username"           => "Datenbank Benutzername",
         "db_password"           => "Datenbank Passwort",

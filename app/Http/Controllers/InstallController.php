@@ -25,6 +25,12 @@ class InstallController extends Controller
 
     public function run(InstallRequest $request) {
         dd($request->validated());
+
+        // Write .env file
+
+        // Clear config cache
+
+        // Migrate Database
     }
 
     public function finish() {

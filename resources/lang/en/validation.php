@@ -150,6 +150,7 @@ return [
         "name" 		    => "Name",
         "email" 	    => "E-Mail Address",
         "password"	    => "Password",
+        "database_type" => "Database Type",
         "db_host"       => "Database Host",
         "db_username"   => "Database Username",
         "db_password"   => "Database Password",
