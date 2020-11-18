@@ -19,6 +19,7 @@
         @include('partials.navigation')
 
         <main>
+            @include('flash::message')
             @yield('content')
         </main>
 
@@ -30,7 +31,5 @@
     </div>
     <script src="{{ mix('js/app.js') }}" defer></script>
     @stack('scripts')
-
-    @include('partials.flash')
 </body>
 </html>

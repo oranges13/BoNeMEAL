@@ -22,6 +22,7 @@
             <div id="content">
                 @include('partials.admin.topbar')
                 <div class="container-fluid">
+                    @include('flash::message')
                     @yield('content')
                 </div>
             </div>
@@ -38,7 +39,5 @@
     </div>
     <script src="{{ mix('js/app.js') }}" defer></script>
     @stack('scripts')
-
-    @include('partials.flash')
 </body>
 </html>

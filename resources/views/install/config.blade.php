@@ -28,75 +28,22 @@
             </h1>
             <hr>
 
-            {!! Form::open(['route' => 'install.run', 'autocomplete' => 'off', 'novalidate' => true]) !!}
+            @open(['route' => 'install.run', 'autocomplete' => 'off', 'id' => 'configForm'])
             <div class="form-row">
                 <div class="col-md-6 pr-md-3">
                     <h2>System Settings</h2>
                     <p>Basic settings for the application</p>
-                    <div class="form-group">
-                        <label for="host">{{__('Host')}}</label>
-                        <input type="url" class="form-control @error('host') is-invalid @enderror" name="host" value="{{old('host')}}" placeholder="https://awesome-site.com" aria-describedby="hostHelp" required>
-                        <small class="form-text text-muted" id="hostHelp">Note: No trailing slash!</small>
-                        @error('host')
-                        <div class="invalid-feedback">{{$message}}</div>
-                        @enderror
-                    </div>
-                    <div class="form-group">
-                        <label for="locale">{{__('Locale')}}</label>
-                        <select class="form-control @error('locale') is-invalid @enderror" name="locale" id="locale" required>
-                            @foreach($langs as $lang)
-                                <option @if($lang == 'en') selected @endif value="{{$lang}}">{{$lang}}</option>
-                            @endforeach
-                        </select>
-                        <small class="form-text text-muted">Don't see your language? <a href="https://github.com/ftbastler/BoNeMEAL/blob/master/CONTRIBUTING.md" target="_blank">Help us translate BoNeMEAL!</a></small>
-                        @error('locale')
-                        <div class="invalid-feedback">{{$message}}</div>
-                        @enderror
-                    </div>
-                    <div class="form-group">
-                        <label for="timezone">{{__('Timezone')}}</label>
-                        <select name="timezone" id="timezone" class="form-control @error('timezone') is-invalid @enderror" required>
-                            @foreach($timezones as $zone => $offset)
-                                <option value="{{$zone}}" @if($zone == old('timezone')) selected @endif>{{$offset}}</option>
-                            @endforeach
-                        </select>
-                        <small class="form-text text-muted">Choosing your time zone will ensure that timestamps are accurate.</small>
-                        @error('timezone')
-                        <div class="invalid-feedback">{{$message}}</div>
-                        @enderror
-                    </div>
+                    @text('host', __('Host'), old('host'), ['help' => 'Note: No trailing slash!', 'required' => true])
+                    @select('locale', __('Locale'), $langs, old('locale') ?? 'en', ['help' => 'Don\'t see your language? <a tabindex=99 href="https://github.com/ftbastler/BoNeMEAL/blob/master/CONTRIBUTING.md" target="_blank">Help us translate BoNeMEAL!</a>', 'required' => true])
+                    @select('timezone', __('Timezone'), $timezones, old('timezone') ?? 'UTC', ['help' => 'Choosing the correct timezone will ensure that timestamps are accurate', 'required' => true])
                 </div>
                 <div class="col-md-6 pl-md-3">
                     <h2>Administrator Account</h2>
                     <p>Create your superuser account for the admin panel.</p>
-                    <div class="form-group">
-                        <label for="name">{{__('Username')}}</label>
-                        <input type="text" name="name" value="{{old('name')}}" class="form-control @error('name') is-invalid @enderror" required>
-                        @error('name')
-                            <div class="invalid-feedback">{{$message}}</div>
-                        @enderror
-                    </div>
-                    <div class="form-group">
-                        <label for="email">{{__('E-mail Address')}}</label>
-                        <input type="email" name="email" value="{{old('email')}}" class="form-control @error('email') is-invalid @enderror" required>
-                        @error('email')
-                            <div class="invalid-feedback">{{$message}}</div>
-                        @enderror
-                    </div>
-                    <div class="form-group">
-                        <label for="password">{{__('Password')}}</label>
-                        <input type="password" name="password" value="{{old('password')}}" class="form-control @error('password') is-invalid @enderror" required>
-                        @error('password')
-                            <div class="invalid-feedback">{{$message}}</div>
-                        @enderror
-                    </div>
-                    <div class="form-group">
-                        <label for="password_confirmation">{{__('Password Confirmation')}}</label>
-                        <input type="password" name="password_confirmation" class="form-control @error('password_confirmation') is-invalid @enderror" required>
-                        @error('password_confirmation')
-                            <div class="invalid-feedback">{{$message}}</div>
-                        @enderror
-                    </div>
+                    @text('name', __('Username'), old('name'), ['required' => true])
+                    @email('email', __('E-Mail Address'), old('email'), ['required' => true])
+                    @password('password', __('Password'), ['required' => true])
+                    @password('password_confirmation', __('Confirm Password'), ['required' => true])
                 </div>
             </div>
             <div class="form-row">
@@ -116,41 +63,17 @@
                             </p>
                             <div class="form-row">
                                 <div class="col-md-12">
-                                    <div class="form-group">
-                                        <label for="database_type">{{__('validation.attributes.database_type')}}</label>
-                                        <select name="database_type" id="database_type" class="form-control @error('database_type') is-invalid @enderror" required>
-                                            <option value="sqlite">SQLite (default)</option>
-                                            <option value="mysql">MySQL</option>
-                                        </select>
-                                    </div>
+                                    @select('database_type', __('validation.attributes.database_type'), ['sqlite' => 'SQLite', 'mysql' => 'MySQL'], old('database_type'), ['help' => 'Database configuration is only required if you select MySQL', 'id' => 'database_type'])
                                 </div>
-                                <div class="col-md-6 pr-md-3 showMysql d-none">
-                                    <div class="form-group">
-                                        {!! Form::label('db_host', __('validation.attributes.db_host')) !!}
-                                        {!! Form::text('db_host', old('db_host'), ['class'=>'form-control', 'required' => true]) !!}
-                                    </div>
-                                    <div class="form-group">
-                                        {!! Form::label('db_port', __('validation.attributes.db_port')) !!}
-                                        {!! Form::text('db_port', old('db_port'), ['class'=>'form-control', 'required' => true, 'pattern' => "\d"]) !!}
-                                    </div>
-                                    <div class="form-group">
-                                        {!! Form::label('db_prefix', __('validation.attributes.db_prefix')) !!}
-                                        {!! Form::text('db_prefix', old('db_prefix'), ['class'=>'form-control']) !!}
-                                    </div>
+                                <div class="col-md-6 pr-md-3 showMysql @if(old('database_type') == 'sqlite') d-none @endif">
+                                    @url('db_host', __('validation.attributes.db_host'), old('db_host'))
+                                    @text('db_port', __('validation.attributes.db_port'), old('db_port'), ['pattern' => '\d+'])
+                                    @text('db_prefix', __('validation.attributes.db_prefix'), old('db_prefix'))
                                 </div>
-                                <div class="col-md-6 pl-md-3 showMysql d-none">
-                                    <div class="form-group">
-                                        {!! Form::label('db_database', __('validation.attributes.db_database')) !!}
-                                        {!! Form::text('db_database', old('db_database'), ['class'=>'form-control', 'required' => true]) !!}
-                                    </div>
-                                    <div class="form-group">
-                                        {!! Form::label('db_username', __('validation.attributes.db_username')) !!}
-                                        {!! Form::text('db_username', old('db_username'), ['class'=>'form-control', 'required' => true]) !!}
-                                    </div>
-                                    <div class="form-group">
-                                        {!! Form::label('db_password', __('validation.attributes.db_password')) !!}
-                                        {!! Form::password('db_password', ['class'=>'form-control', 'required' => true]) !!}
-                                    </div>
+                                <div class="col-md-6 pl-md-3 showMysql @if(old('database_type') == 'sqlite') d-none @endif">
+                                    @text('db_database', __('validation.attributes.db_database'), old('db_database'))
+                                    @text('db_username', __('validation.attributes.db_username'), old('db_username'))
+                                    @password('db_password', __('validation.attributes.db_password'))
                                 </div>
                             </div>
                         </div>
@@ -158,9 +81,9 @@
                 </div>
             </div>
             <div class="form-row mt-2">
-                {!! Form::submit('Submit', ['class'=> 'btn btn-primary btn-lg']) !!}
+                @submit(__('Submit'), ['class'=> 'btn btn-primary btn-lg'])
             </div>
-            {!! Form::close() !!}
+            @close
         </div>
     </div>
 @endsection
@@ -168,11 +91,40 @@
 @push('scripts')
     <script type="text/javascript">
         window.addEventListener('load', function() {
+            if ($("#database_type").val() === 'sqlite') {
+                // Hide database connection fields by default
+                $(".showMysql").addClass('d-none');
+            }
             $("#database_type").change(function () {
                 if ($(this).val() === 'mysql') {
                     $(".showMysql").removeClass('d-none');
                 } else {
+                    $(".showMysql input").each(function() {
+                       $(this).val('');
+                    });
                     $(".showMysql").addClass('d-none');
+                }
+            });
+            $('#configForm').validate({
+                rules: {
+                    host: {
+                        url: true,
+                    },
+                    db_host: {
+                        requiredIfMysql: true,
+                    },
+                    db_port: {
+                        requiredIfMysql: true,
+                    },
+                    db_database: {
+                        requiredIfMysql: true,
+                    },
+                    db_username: {
+                        requiredIfMysql: true,
+                    },
+                    db_password: {
+                        requiredIfMysql: true,
+                    }
                 }
             });
         });

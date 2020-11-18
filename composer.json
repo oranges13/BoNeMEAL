@@ -9,9 +9,10 @@
     "license": "MIT",
     "require": {
         "php": "^7.2",
+        "bgaze/bootstrap-form": "^1.0",
         "fideloper/proxy": "^4.0",
-        "laravel/framework": "^6.2",
-        "laravelcollective/html": "^6.2"
+        "laracasts/flash": "^3.2",
+        "laravel/framework": "^6.2"
     },
     "require-dev": {
         "facade/ignition": "^1.4",

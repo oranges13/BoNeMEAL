@@ -40,27 +40,4 @@ class InstallRequest extends FormRequest
             'db_prefix' => 'nullable|string',
         ];
     }
-
-    /**
-     * After Validation Hook to ensure custom database is reachable
-     *
-     * @param  \Illuminate\Validation\Validator  $validator
-     * @return void
-     */
-    public function withValidator($validator)
-    {
-        $validator->after(function ($validator) {
-            if ($this->database_type === 'mysql') {
-                $connect = mysqli_init();
-                try{
-                    $connect->real_connect($this->db_host, $this->db_username, $this->db_password, $this->db_database,
-                        $this->db_port, null, MYSQLI_CLIENT_SSL_DONT_VERIFY_SERVER_CERT);
-                } catch (ErrorException $e) {
-                    $validator->errors()->add('database_type', __('app.dbNotConnect') . " " . mysqli_connect_error());
-                }
-            }
-        });
-
-        return $validator;
-    }
 }
