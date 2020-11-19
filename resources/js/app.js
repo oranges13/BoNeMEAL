@@ -39,3 +39,15 @@ $.validator.addMethod("requiredIfMysql", function(value, element) {
     }
     return true;
 }, 'Required if database type is "MySQL"');
+
+$(document).ajaxComplete(function(e, xhr, opt){
+    if(xhr.status===419){
+        if(xhr.responseJSON && xhr.responseJSON.message==='CSRF token mismatch.') window.location.reload();
+    }
+});
+
+$.ajaxSetup({
+    headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    }
+});

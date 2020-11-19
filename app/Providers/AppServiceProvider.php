@@ -26,5 +26,12 @@ class AppServiceProvider extends ServiceProvider
     {
         Carbon::setLocale(config('app.locale'));
         setlocale(LC_ALL, config('app.locale'));
+
+        if (config('database.default') === 'sqlite') {
+            $path = config('database.connections.sqlite.database');
+            if (!file_exists($path) && is_dir(dirname($path))) {
+                touch($path);
+            }
+        }
     }
 }

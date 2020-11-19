@@ -1,7 +1,6 @@
 @extends('layouts.basic')
 
 @section('content')
-    <div class="container">
         <ul class="nav nav-fill wizard">
             <li class="nav-item nav-link">
                 <span class="badge badge-default">1</span>
@@ -33,7 +32,7 @@
                 <div class="col-md-6 pr-md-3">
                     <h2>System Settings</h2>
                     <p>Basic settings for the application</p>
-                    @text('host', __('Host'), old('host'), ['help' => 'Note: No trailing slash!', 'required' => true])
+                    @text('host', __('Host'), old('host') ?? $host, ['help' => 'Note: No trailing slash!', 'required' => true])
                     @select('locale', __('Locale'), $langs, old('locale') ?? 'en', ['help' => 'Don\'t see your language? <a tabindex=99 href="https://github.com/ftbastler/BoNeMEAL/blob/master/CONTRIBUTING.md" target="_blank">Help us translate BoNeMEAL!</a>', 'required' => true])
                     @select('timezone', __('Timezone'), $timezones, old('timezone') ?? 'UTC', ['help' => 'Choosing the correct timezone will ensure that timestamps are accurate', 'required' => true])
                 </div>
@@ -66,7 +65,7 @@
                                     @select('database_type', __('validation.attributes.database_type'), ['sqlite' => 'SQLite', 'mysql' => 'MySQL'], old('database_type'), ['help' => 'Database configuration is only required if you select MySQL', 'id' => 'database_type'])
                                 </div>
                                 <div class="col-md-6 pr-md-3 showMysql @if(old('database_type') == 'sqlite') d-none @endif">
-                                    @url('db_host', __('validation.attributes.db_host'), old('db_host'))
+                                    @text('db_host', __('validation.attributes.db_host'), old('db_host'))
                                     @text('db_port', __('validation.attributes.db_port'), old('db_port'), ['pattern' => '\d+'])
                                     @text('db_prefix', __('validation.attributes.db_prefix'), old('db_prefix'))
                                 </div>
@@ -85,7 +84,6 @@
             </div>
             @close
         </div>
-    </div>
 @endsection
 
 @push('scripts')
@@ -107,8 +105,17 @@
             });
             $('#configForm').validate({
                 rules: {
+                    password: {
+                        required: true,
+                        minlength: 8,
+                    },
+                    password_confirmation: {
+                        required: true,
+                        minlength: 8,
+                        equalTo: '[name="password"]',
+                    },
                     host: {
-                        url: true,
+                        url2: true,
                     },
                     db_host: {
                         requiredIfMysql: true,

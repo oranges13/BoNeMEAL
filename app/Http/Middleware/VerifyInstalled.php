@@ -28,7 +28,7 @@ class VerifyInstalled
         try {
             foreach ($this->except as $excluded_route) {
                 if ($request->is($excluded_route)) {
-                    Log::debug("Skipping $excluded_route from installed check...");
+                    Log::debug("Skipping {$request->getUri()} from installed check...");
                     return $next($request);
                 }
             }

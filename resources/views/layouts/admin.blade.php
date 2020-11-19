@@ -22,8 +22,10 @@
             <div id="content">
                 @include('partials.admin.topbar')
                 <div class="container-fluid">
-                    @include('flash::message')
-                    @yield('content')
+                    @include('partials.flash')
+                    <div class="container">
+                        @yield('content')
+                    </div>
                 </div>
             </div>
             <footer class="sticky-footer bg-white">

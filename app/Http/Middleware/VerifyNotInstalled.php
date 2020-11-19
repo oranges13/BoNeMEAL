@@ -17,7 +17,7 @@ class VerifyNotInstalled
     {
         if (file_exists(base_path() . DIRECTORY_SEPARATOR . 'installed.lock'))
         {
-            abort(401, 'Application already installed.');
+            return redirect()->to('/')->with('error', 'Application already installed!');
         }
 
         return $next($request);

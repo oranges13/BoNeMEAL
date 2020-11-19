@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "396aafcd07e49768b07368e520e5b946",
+    "content-hash": "a8a3b774b3539bc171484e71aadb9ba5",
     "packages": [
         {
             "name": "bgaze/bootstrap-form",
@@ -406,71 +406,17 @@
             "time": "2020-10-22T13:48:01+00:00"
         },
         {
-            "name": "laracasts/flash",
-            "version": "3.2",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/laracasts/flash.git",
-                "reference": "76c2e200498795bdbeda97b682536130316e8b97"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/laracasts/flash/zipball/76c2e200498795bdbeda97b682536130316e8b97",
-                "reference": "76c2e200498795bdbeda97b682536130316e8b97",
-                "shasum": ""
-            },
-            "require": {
-                "illuminate/support": "~5.0|^6.0|^7.0|^8.0",
-                "php": ">=5.4.0"
-            },
-            "require-dev": {
-                "mockery/mockery": "dev-master",
-                "phpunit/phpunit": "^6.1"
-            },
-            "type": "library",
-            "extra": {
-                "laravel": {
-                    "providers": [
-                        "Laracasts\\Flash\\FlashServiceProvider"
-                    ],
-                    "aliases": {
-                        "Flash": "Laracasts\\Flash\\Flash"
-                    }
-                }
-            },
-            "autoload": {
-                "psr-0": {
-                    "Laracasts\\Flash": "src/"
-                },
-                "files": [
-                    "src/Laracasts/Flash/functions.php"
-                ]
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Jeffrey Way",
-                    "email": "jeffrey@laracasts.com"
-                }
-            ],
-            "description": "Easy flash notifications",
-            "time": "2020-09-07T13:25:35+00:00"
-        },
-        {
             "name": "laravel/framework",
-            "version": "v6.20.3",
+            "version": "v6.20.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/framework.git",
-                "reference": "cd09d4654ff5b9fcae4429254d3572c3b7495bfe"
+                "reference": "53d66bbc17ce040b5c5fa104a3c781aad161cdc3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/framework/zipball/cd09d4654ff5b9fcae4429254d3572c3b7495bfe",
-                "reference": "cd09d4654ff5b9fcae4429254d3572c3b7495bfe",
+                "url": "https://api.github.com/repos/laravel/framework/zipball/53d66bbc17ce040b5c5fa104a3c781aad161cdc3",
+                "reference": "53d66bbc17ce040b5c5fa104a3c781aad161cdc3",
                 "shasum": ""
             },
             "require": {
@@ -606,7 +552,7 @@
                 "framework",
                 "laravel"
             ],
-            "time": "2020-11-10T14:46:46+00:00"
+            "time": "2020-11-17T14:52:20+00:00"
         },
         {
             "name": "laravelcollective/html",
@@ -6032,7 +5978,7 @@
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
-        "php": "^7.2"
+        "php": "^7.3"
     },
     "platform-dev": [],
     "plugin-api-version": "1.1.0"

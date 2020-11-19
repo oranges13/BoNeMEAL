@@ -19,8 +19,10 @@
         @include('partials.navigation')
 
         <main>
-            @include('flash::message')
-            @yield('content')
+            <div class="container">
+                @include('partials.flash')
+                @yield('content')
+            </div>
         </main>
 
         <footer class="sticky-footer mt-1">

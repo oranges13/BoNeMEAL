@@ -13,13 +13,12 @@
 
 Route::get('/', function () {
     return view('home');
-});
+})->middleware('already_installed');
 
 Route::prefix('install')->name('install.')->group(function () {
     Route::get('/', 'InstallController@index')->name('index');
     Route::get('config', 'InstallController@config')->name('config');
     Route::post('run', 'InstallController@run')->name('run');
-    Route::get('finish', 'InstallController@finish')->name('finish');
 });
 
 Auth::routes();

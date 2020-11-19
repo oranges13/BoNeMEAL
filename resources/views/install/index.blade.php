@@ -27,7 +27,6 @@
 @endpush
 
 @section('content')
-<div class="container">
     <ul class="nav nav-fill wizard">
             <li class="nav-item nav-link active">
                 <span class="badge badge-default">1</span>
@@ -48,7 +47,8 @@
     </ul>
 
     <div class="content">
-        <h2>Welcome to the Ban-Management of tomorrow!</h2><hr/>
+        <h1>Welcome to the Ban-Management of tomorrow!</h1>
+        <hr/>
         <p class="lead">This Installer will guide you through the installation of the <b><u>B</u>a<u>N</u> <u>M</u>anagement w<u>E</u>b <u>A</u>pp<u>L</u>ication</b> (BoNeMEAL).</p>
 
         <noscript>
@@ -87,5 +87,4 @@
     <div class="buttons">
         <a href="{{ route('install.config') }}" class="btn btn-primary disabled" id="start">Agree &amp; Continue <i class="fa fa-chevron-right"></i></a>
     </div>
-</div>
 @endsection
