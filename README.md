@@ -10,7 +10,7 @@ The **b**a**n** **m**anagement w**e**b **a**pp**l**ication (BoNeMEAL) makes it e
 This project was started to offer an alternative or even a possible replacement for the clumsy "BanManager WebUI".
 BoNeMEAL is built with Laravel 5 together with tons of other awesome tools, frameworks and libraries such as Composer, gulp.js, Bootstrap, jQuery etc.
 
-# [Wiki](https://github.com/ftbastler/BoNeMEAL/wiki)
+# [Wiki](https://github.com/oranges13/BoNeMEAL/wiki)
 
 Visit the wiki for a **setup and installation guide** and other useful resources.
 
