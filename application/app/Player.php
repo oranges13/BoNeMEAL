@@ -18,37 +18,37 @@ class Player extends Model {
 
 	public function bans()
 	{
-		return $this->hasManyRelation('App\PlayerBan');
+		return $this->hasManyRelation(\App\PlayerBan::class);
 	}
 
 	public function mutes()
 	{
-		return $this->hasManyRelation('App\PlayerMute');
+		return $this->hasManyRelation(\App\PlayerMute::class);
 	}
 
 	public function kicks()
 	{
-		return $this->hasManyRelation('App\PlayerKick');
+		return $this->hasManyRelation(\App\PlayerKick::class);
 	}
 
 	public function notes()
 	{
-		return $this->hasManyRelation('App\PlayerNote');
+		return $this->hasManyRelation(\App\PlayerNote::class);
 	}
 
 	public function warnings()
 	{
-		return $this->hasManyRelation('App\PlayerWarning');
+		return $this->hasManyRelation(\App\PlayerWarning::class);
 	}
 
 	public function pastBans()
 	{
-		return $this->hasManyRelation('App\PlayerBanRecord');
+		return $this->hasManyRelation(\App\PlayerBanRecord::class);
 	}
 
 	public function pastMutes()
 	{
-		return $this->hasManyRelation('App\PlayerMuteRecord');
+		return $this->hasManyRelation(\App\PlayerMuteRecord::class);
 	}
 
 	public function getIpAttribute() {

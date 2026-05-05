@@ -39,7 +39,7 @@ class VerifyServersUpgraded {
         {
             try {
                 Artisan::call('migrate');
-            } catch(\Exception $e) {
+            } catch(\Exception) {
 
             }
         }

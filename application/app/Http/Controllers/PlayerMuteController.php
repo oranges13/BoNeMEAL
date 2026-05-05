@@ -50,17 +50,14 @@ class PlayerMuteController extends Controller {
 	 */
 	public function store()
 	{
-		\Validator::extend('future', function($attribute, $value, $parameters)
-		{
-			return $value == "" || Carbon::parse($value)->isFuture();
-		});
+		\Validator::extend('future', fn($attribute, $value, $parameters) => $value == "" || Carbon::parse($value)->isFuture());
 
-		$rules = array(
+		$rules = [
 			'server' => 'required',
 			'reason' => 'required',
 			'player' => 'required',
 			'expires' => 'future'
-			);
+			];
 
 		$validator = \Validator::make(\Input::all(), $rules);
 
@@ -129,16 +126,13 @@ class PlayerMuteController extends Controller {
 	 */
 	public function update($server, $id)
 	{
-		\Validator::extend('future', function($attribute, $value, $parameters)
-		{
-			return $value == "" || Carbon::parse($value)->isFuture();
-		});
+		\Validator::extend('future', fn($attribute, $value, $parameters) => $value == "" || Carbon::parse($value)->isFuture());
 
-		$rules = array(
+		$rules = [
 			'reason' => 'required',
 			'player' => 'required',
 			'expires' => 'future'
-			);
+			];
 
 		$validator = \Validator::make(\Input::all(), $rules);
 

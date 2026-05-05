@@ -2,8 +2,10 @@
 
 use App\Http\Controllers\Controller;
 use App\User;
-use Validator;
-use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
+use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Foundation\Auth\RegistersUsers;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class AuthController extends Controller {
 
@@ -18,7 +20,9 @@ class AuthController extends Controller {
 	|
 	*/
 
-	use AuthenticatesAndRegistersUsers;
+	use AuthenticatesUsers, RegistersUsers {
+		AuthenticatesUsers::guard insteadof RegistersUsers;
+	}
 
 	/**
 	 * Create a new authentication controller instance.
@@ -28,6 +32,31 @@ class AuthController extends Controller {
 	public function __construct()
 	{
 		$this->middleware('guest', ['except' => 'getLogout']);
+	}
+
+	public function getLogin()
+	{
+		return $this->showLoginForm();
+	}
+
+	public function postLogin(Request $request)
+	{
+		return $this->login($request);
+	}
+
+	public function getLogout(Request $request)
+	{
+		return $this->logout($request);
+	}
+
+	public function getRegister()
+	{
+		return $this->showRegistrationForm();
+	}
+
+	public function postRegister(Request $request)
+	{
+		return $this->register($request);
 	}
 
 	/**

@@ -41,11 +41,11 @@ class AppServiceProvider extends ServiceProvider {
 				Config::set('database.connections.'.$server->id.'.charset', 'utf8');
                 Config::set('database.connections.'.$server->id.'.prefix', $server->db_prefix);
                 if(isset($server->db_ssl) && $server->db_ssl === 1) {
-                    Config::set('database.connections.'.$server->id.'.options', array(
+                    Config::set('database.connections.'.$server->id.'.options', [
                         PDO::MYSQL_ATTR_SSL_CA      => $server->db_ca,
                         PDO::MYSQL_ATTR_SSL_CERT    => $server->db_cert,
                         PDO::MYSQL_ATTR_SSL_KEY     => $server->db_key,
-                    ));
+                    ]);
                     Config::set('database.connections.'.$server->id.'.strict', true);
                 } else {
                     Config::set('database.connections.'.$server->id.'.strict', false);

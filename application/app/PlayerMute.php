@@ -9,7 +9,7 @@ class PlayerMute extends RecordBaseModel {
 
 	public function scopeActive($query)
 	{
-		return $query->where(function ($query) {
+		return $query->where(function ($query): void {
 		    $query->where('expires', '>=', Carbon::now()->timestamp)
 			->orWhere('expires', '=', 0);
 		});

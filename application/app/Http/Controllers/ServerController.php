@@ -59,11 +59,11 @@ class ServerController extends Controller {
         ]);
 
 		// Upload cert files if they exist
-        $certs = array();
+        $certs = [];
         foreach ($request->file('ssl') as $key => $file) {
             $certs[$key] = null; // Set key unless successful upload to avoid undefined index error
             if ($request->hasFile('ssl.'.$key) && $file->isValid()) {
-                $filename = str_slug($request->name . '-' . $key, '-') . '.' . $file->getClientOriginalExtension();
+                $filename = \Illuminate\Support\Str::slug($request->name . '-' . $key, '-') . '.' . $file->getClientOriginalExtension();
                 $file->move(storage_path('app'), $filename);
                 $certs[$key] = storage_path('app/' . $filename); // Save file name for database storage
             }
@@ -74,9 +74,9 @@ class ServerController extends Controller {
 
         if($request->db_ssl) { // Initialize connection for SSL
             $connect->ssl_set(
-                (isset($certs['db_key']) ? $certs['db_key'] : null),
-                (isset($certs['db_cert']) ? $certs['db_cert'] : null),
-                (isset($certs['db_ca']) ? $certs['db_ca'] : null),
+                ($certs['db_key'] ?? null),
+                ($certs['db_cert'] ?? null),
+                ($certs['db_ca'] ?? null),
                 null,
                 null
             );
@@ -84,7 +84,7 @@ class ServerController extends Controller {
 
         try{
             $connect->real_connect($request->db_host, $request->db_username, $request->db_password, $request->db_database, $request->db_port, null, MYSQLI_CLIENT_SSL_DONT_VERIFY_SERVER_CERT);
-        } catch (\ErrorException $e) {
+        } catch (\ErrorException) {
             return redirect()->route('admin.servers.create')->withInput()->with('message', trans('app.dbNotConnect'))->with('messageDetails', mysqli_connect_error());
         }
 
@@ -159,7 +159,7 @@ class ServerController extends Controller {
             'db_ssl' => 'required_with:ssl.db_ca,ssl.db_cert,ssl.db_key',
         ]);
 
-	    $ssl_validations = array();
+	    $ssl_validations = [];
 
         if($request->hasFile('ssl.db_ca')) {
             $ssl_validations['ssl.db_ca'] = 'sometimes|mimes:pem,txt';
@@ -176,10 +176,10 @@ class ServerController extends Controller {
         $this->validate($request, $ssl_validations);
 
         // Upload cert files if they exist
-        $certs = array();
+        $certs = [];
         foreach ($request->file('ssl') as $key => $file) {
             if ($request->hasFile('ssl.'.$key) && $file->isValid()) {
-                $filename = str_slug($request->name . '-' . $key, '-') . '.' . $file->getClientOriginalExtension();
+                $filename = \Illuminate\Support\Str::slug($request->name . '-' . $key, '-') . '.' . $file->getClientOriginalExtension();
                 $file->move(storage_path('app'), $filename);
                 $certs[$key] = storage_path('app/' . $filename); // Save file name for database storage
             }
@@ -192,9 +192,9 @@ class ServerController extends Controller {
 
         if($request->db_ssl) { // Initialize connection for SSL using existing values or newly updated ones
             $connect->ssl_set(
-                (isset($certs['db_key']) ? $certs['db_key'] : (isset($server->db_key) ? $server->db_key : null)),
-                (isset($certs['db_cert']) ? $certs['db_cert'] : (isset($server->db_cert) ? $server->db_cert : null)),
-                (isset($certs['db_ca']) ? $certs['db_ca'] : (isset($server->db_ca) ? $server->db_ca : null)),
+                ($certs['db_key'] ?? $server->db_key ?? null),
+                ($certs['db_cert'] ?? $server->db_cert ?? null),
+                ($certs['db_ca'] ?? $server->db_ca ?? null),
                 null,
                 null
             );
@@ -202,7 +202,7 @@ class ServerController extends Controller {
 
         try{
             $connect->real_connect($request->db_host, $request->db_username, $request->db_password, $request->db_database, $request->db_port, null, MYSQLI_CLIENT_SSL_DONT_VERIFY_SERVER_CERT);
-        } catch (\ErrorException $e) {
+        } catch (\ErrorException) {
             return redirect()->route('admin.servers.edit', [$id])->withInput()->with('message', trans('app.dbNotConnect'))->with('messageDetails', mysqli_connect_error());
         }
 

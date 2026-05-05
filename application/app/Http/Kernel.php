@@ -10,12 +10,12 @@ class Kernel extends HttpKernel {
 	 * @var array
 	 */
 	protected $middleware = [
-		'Illuminate\Foundation\Http\Middleware\CheckForMaintenanceMode',
-		'Illuminate\Cookie\Middleware\EncryptCookies',
-		'Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse',
-		'Illuminate\Session\Middleware\StartSession',
-		'Illuminate\View\Middleware\ShareErrorsFromSession',
-		'App\Http\Middleware\VerifyCsrfToken',
+		\Illuminate\Foundation\Http\Middleware\CheckForMaintenanceMode::class,
+		\Illuminate\Cookie\Middleware\EncryptCookies::class,
+		\Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse::class,
+		\Illuminate\Session\Middleware\StartSession::class,
+		\Illuminate\View\Middleware\ShareErrorsFromSession::class,
+		\App\Http\Middleware\VerifyCsrfToken::class,
 	];
 
 	/**
@@ -24,16 +24,16 @@ class Kernel extends HttpKernel {
 	 * @var array
 	 */
 	protected $routeMiddleware = [
-		'auth' => 'App\Http\Middleware\Authenticate',
-		'auth.basic' => 'Illuminate\Auth\Middleware\AuthenticateWithBasicAuth',
-		'guest' => 'App\Http\Middleware\RedirectIfAuthenticated',
-		'admin' => 'App\Http\Middleware\AdminAuthenticate',
-		'mod' => 'App\Http\Middleware\ModeratorAuthenticate',
-		'superuser' => 'App\Http\Middleware\SuperuserAuthenticate',
-		'install' => 'App\Http\Middleware\VerifyNotInstalled',
-		'installed' => 'App\Http\Middleware\VerifyInstalled',
-		'servers' => 'App\Http\Middleware\VerifyServers',
-        'ssl' => 'App\Http\Middleware\VerifyServersUpgraded',
+		'auth' => \App\Http\Middleware\Authenticate::class,
+		'auth.basic' => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
+		'guest' => \App\Http\Middleware\RedirectIfAuthenticated::class,
+		'admin' => \App\Http\Middleware\AdminAuthenticate::class,
+		'mod' => \App\Http\Middleware\ModeratorAuthenticate::class,
+		'superuser' => \App\Http\Middleware\SuperuserAuthenticate::class,
+		'install' => \App\Http\Middleware\VerifyNotInstalled::class,
+		'installed' => \App\Http\Middleware\VerifyInstalled::class,
+		'servers' => \App\Http\Middleware\VerifyServers::class,
+        'ssl' => \App\Http\Middleware\VerifyServersUpgraded::class,
 	];
 
 }

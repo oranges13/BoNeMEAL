@@ -40,12 +40,12 @@ class RecordBaseModel extends Model {
 
 	public function actor()
 	{
-		return $this->belongsToRelation('App\Player', 'actor_id');
+		return $this->belongsToRelation(\App\Player::class, 'actor_id');
 	}
 
 	public function player()
 	{
-		return $this->belongsToRelation('App\Player', 'player_id');
+		return $this->belongsToRelation(\App\Player::class, 'player_id');
 	}
 
 	public function getCreatedAtAttribute() {

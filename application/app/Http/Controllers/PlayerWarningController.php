@@ -50,11 +50,11 @@ class PlayerWarningController extends Controller {
 	 */
 	public function store()
 	{
-		$rules = array(
+		$rules = [
 			'server' => 'required',
 			'reason' => 'required',
 			'player' => 'required',
-			);
+			];
 
 		$validator = \Validator::make(\Input::all(), $rules);
 
@@ -114,10 +114,10 @@ class PlayerWarningController extends Controller {
 	 */
 	public function update($server, $id)
 	{
-		$rules = array(
+		$rules = [
 			'reason' => 'required',
 			'player' => 'required',
-			);
+			];
 
 		$validator = \Validator::make(\Input::all(), $rules);
 

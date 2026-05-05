@@ -52,17 +52,17 @@ class PastRecordBaseModel extends Model {
 
 	public function actor()
 	{
-		return $this->belongsToRelation('App\Player', 'actor_id');
+		return $this->belongsToRelation(\App\Player::class, 'actor_id');
 	}
 
 	public function pastActor()
 	{
-		return $this->belongsToRelation('App\Player', 'pastActor_id');
+		return $this->belongsToRelation(\App\Player::class, 'pastActor_id');
 	}
 
 	public function player()
 	{
-		return $this->belongsToRelation('App\Player', 'player_id');
+		return $this->belongsToRelation(\App\Player::class, 'player_id');
 	}
 
 	public function getCreatedAtAttribute() {

@@ -52,9 +52,7 @@ class PlayerAdminController extends Controller {
 			$activity = $activity->merge($bans)->merge($mutes)->merge($kicks)->merge($warnings)->merge($pastBans)->merge($pastMutes)->merge($notes);
 		}
 
-		$activity->sortBy(function($item) {
-			return -1 * $item->created_at->timestamp;
-		});
+		$activity->sortBy(fn($item) => -1 * $item->created_at->timestamp);
 
 		$player = $players[0];
 

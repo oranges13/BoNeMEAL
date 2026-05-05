@@ -24,7 +24,7 @@ class ApiController extends Controller {
 			array_push($results, $player->name);
 		}
 
-		return array('query' => $query, 'results' => $results);
+		return ['query' => $query, 'results' => $results];
 	}
 
 	public function searchPlayerNameAll($query)
@@ -40,7 +40,7 @@ class ApiController extends Controller {
 
 		$results = array_unique($results);
 
-		return array('query' => $query, 'results' => $results);
+		return ['query' => $query, 'results' => $results];
 	}
 
 	public function version() {

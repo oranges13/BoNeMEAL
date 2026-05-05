@@ -40,7 +40,7 @@ class AdminController extends Controller {
 					->where('lastSeen', '<=', strtotime("now"))
 					->selectRaw("count(*) as total_players, FROM_UNIXTIME(lastSeen, '%Y-%m-%d') as 'day'")
 					->groupBy('day')
-					->lists('total_players', 'day')
+					->pluck('total_players', 'day')
 				);
 
 				$numPlayers += \App\Player::on($server->id)->count();
@@ -59,7 +59,7 @@ class AdminController extends Controller {
 
 			}
 
-			$lastSeenStats = array();
+			$lastSeenStats = [];
 
 			for($i=30; $i>=0; $i--) {
 				$date = \Carbon\Carbon::now()->subDays($i);
@@ -150,37 +150,21 @@ class AdminController extends Controller {
 			}
 
 			$activity = collect()->merge($recentBans)->merge($recentBanRecords)->merge($recentMutes)->merge($recentMuteRecords)->merge($recentKicks)->merge($recentWarnings)->merge($recentNotes);
-			$activity = $activity->sortBy(function($item) {
-				return -1 * $item->created->timestamp;
-			})->slice(0, 10);
+			$activity = $activity->sortBy(fn($item) => -1 * $item->created->timestamp)->slice(0, 10);
 
-			$recentBans = $recentBans->sortBy(function($item) {
-				return -1 * $item->created_at->timestamp;
-			})->slice(0, 5);
+			$recentBans = $recentBans->sortBy(fn($item) => -1 * $item->created_at->timestamp)->slice(0, 5);
 
-			$recentBanRecords = $recentBanRecords->sortBy(function($item) {
-				return -1 * $item->created->timestamp;
-			})->slice(0, 5);
+			$recentBanRecords = $recentBanRecords->sortBy(fn($item) => -1 * $item->created->timestamp)->slice(0, 5);
 
-			$recentMutes = $recentMutes->sortBy(function($item) {
-				return -1 * $item->created_at->timestamp;
-			})->slice(0, 5);
+			$recentMutes = $recentMutes->sortBy(fn($item) => -1 * $item->created_at->timestamp)->slice(0, 5);
 
-			$recentMuteRecords = $recentMuteRecords->sortBy(function($item) {
-				return -1 * $item->created->timestamp;
-			})->slice(0, 5);
+			$recentMuteRecords = $recentMuteRecords->sortBy(fn($item) => -1 * $item->created->timestamp)->slice(0, 5);
 
-			$recentKicks = $recentKicks->sortBy(function($item) {
-				return -1 * $item->created_at->timestamp;
-			})->slice(0, 5);
+			$recentKicks = $recentKicks->sortBy(fn($item) => -1 * $item->created_at->timestamp)->slice(0, 5);
 
-			$recentWarnings = $recentWarnings->sortBy(function($item) {
-				return -1 * $item->created_at->timestamp;
-			})->slice(0, 5);
+			$recentWarnings = $recentWarnings->sortBy(fn($item) => -1 * $item->created_at->timestamp)->slice(0, 5);
 
-			$recentNotes = $recentNotes->sortBy(function($item) {
-				return -1 * $item->created_at->timestamp;
-			})->slice(0, 5);
+			$recentNotes = $recentNotes->sortBy(fn($item) => -1 * $item->created_at->timestamp)->slice(0, 5);
 
 			return compact('activity', 'recentMutes', 'recentBanRecords', 'recentBans', 'recentMuteRecords', 'recentKicks', 'recentWarnings', 'recentNotes');
 		});

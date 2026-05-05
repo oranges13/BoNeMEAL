@@ -59,11 +59,11 @@ class PlayerNoteController extends Controller {
 	 */
 	public function store()
 	{
-		$rules = array(
+		$rules = [
 			'server' => 'required',
 			'message' => 'required',
 			'player' => 'required',
-			);
+			];
 
 		$validator = \Validator::make(\Input::all(), $rules);
 
@@ -123,10 +123,10 @@ class PlayerNoteController extends Controller {
 	 */
 	public function update($server, $id)
 	{
-		$rules = array(
+		$rules = [
 			'message' => 'required',
 			'player' => 'required',
-			);
+			];
 
 		$validator = \Validator::make(\Input::all(), $rules);
 

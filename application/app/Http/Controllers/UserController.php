@@ -84,17 +84,14 @@ class UserController extends Controller {
 	 */
 	public function update($id)
 	{		
-		\Validator::extend('role', function($attribute, $value, $parameters)
-		{
-			return ($value == 0 || $value == 3 || $value == 6 || $value == 8);
-		});
+		\Validator::extend('role', fn($attribute, $value, $parameters) => $value == 0 || $value == 3 || $value == 6 || $value == 8);
 
-		$rules = array(
+		$rules = [
 			'name'       => 'required|min:3|max:255',
 			'role'      => 'required|numeric|role',
 			'email'		=> 'required|email|max:255|unique:users,email,'.$id ,
 			'password' => 'confirmed|min:6'
-		);
+		];
 		
 		$validator = \Validator::make(\Input::all(), $rules);
 

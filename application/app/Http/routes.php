@@ -1,4 +1,5 @@
 <?php
+use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
@@ -24,7 +25,7 @@ Route::get('/api/version', 'ApiController@version');
 Route::get('/api/search-playername/{server?}/{query}', 'ApiController@searchPlayerName');
 Route::get('/api/search-playername-all/{query}', 'ApiController@searchPlayerNameAll');
 
-Route::group(array('prefix' => '/admin', 'middleware' => 'auth'), function() {
+Route::group(['prefix' => '/admin', 'middleware' => 'auth'], function(): void {
 	Route::get('/players', 'PlayerAdminController@index');
 	Route::get('/players/search', 'PlayerAdminController@search');
 	Route::get('/players/{player}', 'PlayerAdminController@show');
@@ -78,21 +79,26 @@ Route::group(array('prefix' => '/admin', 'middleware' => 'auth'), function() {
 	Route::post('/config', 'ConfigurationController@update');
 });
 
-Route::group(array('prefix' => '/install', 'middleware' => 'install'), function() {
+Route::group(['prefix' => '/install', 'middleware' => 'install'], function(): void {
 	Route::get('/', 'InstallController@index');
 	Route::get('/config', 'InstallController@config');
 	Route::post('/run', 'InstallController@install');
 	Route::get('/finish', 'InstallController@finish');
 });
 
-Route::get('/home', function() {
-	return redirect('/');
-});
+Route::get('/home', fn() => redirect('/'));
 
-Route::controllers([
-	'/auth/password' => 'Auth\PasswordController',
-	'/auth' => 'Auth\AuthController',
-]);
+Route::get('/auth/login', 'Auth\AuthController@getLogin');
+Route::post('/auth/login', 'Auth\AuthController@postLogin');
+Route::get('/auth/logout', 'Auth\AuthController@getLogout');
+
+Route::get('/auth/register', 'Auth\AuthController@getRegister');
+Route::post('/auth/register', 'Auth\AuthController@postRegister');
+
+Route::get('/auth/password/email', 'Auth\PasswordController@getEmail');
+Route::post('/auth/password/email', 'Auth\PasswordController@postEmail');
+Route::get('/auth/password/reset/{token?}', 'Auth\PasswordController@getReset');
+Route::post('/auth/password/reset', 'Auth\PasswordController@postReset');
 
 Route::bind('player', function($value)
 {

@@ -46,7 +46,7 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
 	}
 
 	public function getReadableRoleAttribute() {
-		$roles = array(0 => trans('app.role.normalUser'), 3 => trans('app.role.moderator'), 6 => trans('app.role.admin'), 8 => trans('app.role.superuser'));
+		$roles = [0 => trans('app.role.normalUser'), 3 => trans('app.role.moderator'), 6 => trans('app.role.admin'), 8 => trans('app.role.superuser')];
 		return $roles[$this->attributes['role']];
 	}
 
