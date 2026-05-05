@@ -1,4 +1,5 @@
 /application/node_modules
+/application/vendor/*
 .env
 installed.lock
 database.sqlite

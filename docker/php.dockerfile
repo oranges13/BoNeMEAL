@@ -1,4 +1,4 @@
-FROM php:7.3-fpm-alpine
+FROM php:8.0-fpm-alpine
 
 ADD ./docker/php/www.conf /usr/local/etc/php-fpm.d/www.conf
 
@@ -10,9 +10,9 @@ RUN chown laravel:laravel /var/www/html
 
 WORKDIR /var/www/html
 
-RUN apk add php7-sqlite3 php7-mysqli sqlite sqlite-dev && docker-php-ext-install pdo pdo_mysql pdo_sqlite mysqli
+RUN apk add sqlite sqlite-dev linux-headers && docker-php-ext-install pdo pdo_mysql pdo_sqlite mysqli
 
 # install and enable xdebug
 RUN apk add --no-cache $PHPIZE_DEPS \
-	&& pecl install xdebug-2.9.8 \
+	&& pecl install xdebug-3.1.6 \
 	&& docker-php-ext-enable xdebug
