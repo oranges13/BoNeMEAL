@@ -14,7 +14,7 @@ Always run `php artisan migrate` without `--database=bandb`.
 
 ## Local development
 
-Requires PHP >= 8.3 (target runtime is 8.5), Composer, Node 22.
+Requires PHP 8.5 (`herd isolate php@8.5`), Composer, Node 22.
 
     composer install && npm ci
     cp .env.example .env && php artisan key:generate
