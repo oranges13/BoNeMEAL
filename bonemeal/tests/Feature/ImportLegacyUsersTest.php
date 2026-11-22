@@ -4,8 +4,10 @@ namespace Tests\Feature;
 
 use App\Enums\Role;
 use App\Models\User;
+use App\Notifications\SetPasswordInvite;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Notification;
 use PDO;
 use Tests\TestCase;
 
@@ -67,5 +69,46 @@ class ImportLegacyUsersTest extends TestCase
         $this->assertSame(3, User::count());
         $this->assertFalse($user->fresh()->must_set_password);
         $this->assertTrue(Hash::check('new-password', $user->fresh()->password));
+    }
+
+    public function test_import_sends_no_email(): void
+    {
+        Notification::fake();
+
+        $this->artisan('users:import', ['path' => $this->path])->assertSuccessful();
+
+        Notification::assertNothingSent();
+    }
+
+    public function test_send_invites_requires_explicit_scope(): void
+    {
+        Notification::fake();
+        $this->artisan('users:import', ['path' => $this->path])->assertSuccessful();
+
+        $this->artisan('users:send-invites')->assertFailed();
+        $this->artisan('users:send-invites', ['--all' => true, '--dry-run' => true])->assertSuccessful();
+        Notification::assertNothingSent();
+    }
+
+    public function test_send_invites_emails_only_chosen_users(): void
+    {
+        Notification::fake();
+        $this->artisan('users:import', ['path' => $this->path])->assertSuccessful();
+
+        $this->artisan('users:send-invites', ['emails' => ['mod@example.com'], '--force' => true])->assertSuccessful();
+
+        Notification::assertSentTo(User::where('email', 'mod@example.com')->first(), SetPasswordInvite::class);
+        Notification::assertNotSentTo(User::where('email', 'admin@example.com')->first(), SetPasswordInvite::class);
+    }
+
+    public function test_send_invites_all_skips_users_who_have_set_a_password(): void
+    {
+        Notification::fake();
+        $this->artisan('users:import', ['path' => $this->path])->assertSuccessful();
+        User::where('email', 'mod@example.com')->update(['must_set_password' => false]);
+
+        $this->artisan('users:send-invites', ['--all' => true, '--force' => true])->assertSuccessful();
+
+        Notification::assertSentTimes(SetPasswordInvite::class, 2);
     }
 }

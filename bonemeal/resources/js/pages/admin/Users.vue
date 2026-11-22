@@ -23,6 +23,7 @@ const props = defineProps<{
     users: Row[];
     roles: string[];
     inviteUrl?: string | null;
+    inviteEmailed?: boolean;
 }>();
 
 defineOptions({
@@ -61,6 +62,7 @@ function invite(user: Row) {
             class="rounded-md border border-green-600/40 bg-green-600/10 p-4 text-sm"
             data-test="invite-url"
         >
+            <p v-if="props.inviteEmailed" class="mb-1">An invite email was sent.</p>
             <p class="font-medium">Set-password link (share it privately; shown once):</p>
             <code class="mt-1 block break-all">{{ props.inviteUrl }}</code>
         </div>

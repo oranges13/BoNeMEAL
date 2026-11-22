@@ -7,6 +7,7 @@ use App\Concerns\ProfileValidationRules;
 use App\Enums\Role;
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use App\Notifications\SetPasswordInvite;
 use App\Support\MinecraftUuid;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -14,6 +15,7 @@ use Illuminate\Support\Facades\Password;
 use Illuminate\Validation\Rule;
 use Inertia\Inertia;
 use Inertia\Response;
+use Throwable;
 
 class UserController extends Controller
 {
@@ -25,6 +27,7 @@ class UserController extends Controller
             'users' => User::orderBy('name')->get(['id', 'name', 'email', 'role', 'active', 'must_set_password', 'minecraft_uuid']),
             'roles' => array_map(fn (Role $role) => $role->value, Role::cases()),
             'inviteUrl' => $request->session()->get('inviteUrl'),
+            'inviteEmailed' => (bool) $request->session()->get('inviteEmailed'),
         ]);
     }
 
@@ -42,7 +45,20 @@ class UserController extends Controller
 
         $user = User::create([...$data, 'active' => true, 'must_set_password' => true, 'password' => null]);
 
-        return $this->inviteRedirect($user);
+        $url = $this->inviteUrl($user);
+
+        // Email the invite; the on-screen link stays as a fallback if mail is down.
+        try {
+            $user->notify(new SetPasswordInvite($url));
+            $emailed = true;
+        } catch (Throwable $e) {
+            report($e);
+            $emailed = false;
+        }
+
+        return to_route('admin.users.index')
+            ->with('inviteUrl', $url)
+            ->with('inviteEmailed', $emailed);
     }
 
     public function update(Request $request, User $user): RedirectResponse
@@ -77,10 +93,12 @@ class UserController extends Controller
 
     private function inviteRedirect(User $user): RedirectResponse
     {
-        $token = Password::broker()->createToken($user);
+        return to_route('admin.users.index')->with('inviteUrl', $this->inviteUrl($user));
+    }
 
-        return to_route('admin.users.index')
-            ->with('inviteUrl', route('password.reset', ['token' => $token, 'email' => $user->email]));
+    private function inviteUrl(User $user): string
+    {
+        return route('password.reset', ['token' => Password::broker()->createToken($user), 'email' => $user->email]);
     }
 
     private function normalizeUuid(Request $request): void

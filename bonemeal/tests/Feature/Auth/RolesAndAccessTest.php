@@ -3,7 +3,9 @@
 namespace Tests\Feature\Auth;
 
 use App\Models\User;
+use App\Notifications\SetPasswordInvite;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Password;
 use Tests\TestCase;
 
@@ -72,6 +74,17 @@ class RolesAndAccessTest extends TestCase
         $user = User::where('email', 'new@example.com')->firstOrFail();
         $this->assertNull($user->password);
         $this->assertTrue($user->must_set_password);
+    }
+
+    public function test_creating_a_user_emails_the_invite(): void
+    {
+        Notification::fake();
+
+        $this->actingAs(User::factory()->admin()->create())
+            ->post('/admin/users', ['name' => 'New Mod', 'email' => 'new@example.com', 'role' => 'moderator'])
+            ->assertSessionHas('inviteEmailed', true);
+
+        Notification::assertSentTo(User::where('email', 'new@example.com')->first(), SetPasswordInvite::class);
     }
 
     public function test_admin_can_deactivate_a_user(): void
